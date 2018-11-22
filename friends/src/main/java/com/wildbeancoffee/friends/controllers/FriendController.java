@@ -3,8 +3,11 @@ package com.wildbeancoffee.friends.controllers;
 import com.wildbeancoffee.friends.model.Friend;
 import com.wildbeancoffee.friends.repository.FriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
 import java.util.Optional;
 
 @RestController
@@ -23,13 +26,21 @@ public class FriendController {
   }
 
   @PostMapping("/friend")
-  Friend create(@RequestBody Friend friend) {
-    return friendRepository.save(friend);
+  Friend create(@RequestBody Friend friend) throws ValidationException {
+    if (friend.getId() == 0 && friend.getFirstName() != null && friend.getLastName() != null) {
+      return friendRepository.save(friend);
+    } else {
+      throw new ValidationException("friend cannot be created");
+    }
   }
 
   @PutMapping("/friend")
-  Friend update(@RequestBody Friend friend) {
-    return friendRepository.save(friend);
+  ResponseEntity<Friend> update(@RequestBody Friend friend) {
+    if (friendRepository.findById(friend.getId()).isPresent()) {
+      return new ResponseEntity<>(friendRepository.save(friend), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(friend, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @DeleteMapping("/friend/{id}")
