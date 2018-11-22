@@ -2,13 +2,15 @@ package com.wildbeancoffee.friends.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class ErrorMessage {
-    private String status;
+    private int status;
     private String message;
-
+    private long timeStamp;
 }

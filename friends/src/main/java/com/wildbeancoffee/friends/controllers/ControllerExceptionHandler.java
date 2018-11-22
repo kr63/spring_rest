@@ -1,20 +1,21 @@
 package com.wildbeancoffee.friends.controllers;
 
+import com.wildbeancoffee.friends.exceptions.FriendEntityException;
 import com.wildbeancoffee.friends.util.ErrorMessage;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import javax.xml.bind.ValidationException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ResponseBody
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ErrorMessage exceptionHandler(ValidationException e) {
-        return new ErrorMessage("400", e.getMessage());
+    public ResponseEntity<ErrorMessage> handlerException(FriendEntityException e) {
+
+        ErrorMessage errorMessage = new ErrorMessage(HttpStatus.BAD_REQUEST.value(),
+                e.getMessage(), System.currentTimeMillis() );
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }
