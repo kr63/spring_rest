@@ -14,22 +14,22 @@ import java.util.List;
 @Setter
 public class Friend {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-  @JsonProperty("first-name")
-  private String firstName;
+    @JsonProperty("first-name")
+    private String firstName;
 
-  @JsonProperty("last-name")
-  private String lastName;
-  int age;
+    @JsonProperty("last-name")
+    private String lastName;
+    int age;
 
-  @JsonIgnore
-  boolean married;
+    @JsonIgnore
+    boolean married;
 
-  @JsonManagedReference
-  @OneToMany(mappedBy = "friend", cascade = CascadeType.ALL)
-  List<Address> addresses;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "friend", cascade = CascadeType.ALL)
+    List<Address> addresses;
 
 }

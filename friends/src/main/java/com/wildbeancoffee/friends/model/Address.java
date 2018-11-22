@@ -11,15 +11,15 @@ import javax.persistence.*;
 @Setter
 public class Address {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-  private String street;
+    private String street;
 
-  private String city;
+    private String city;
 
-  @JsonBackReference
-  @ManyToOne
-  Friend friend;
+    @JsonBackReference
+    @ManyToOne
+    Friend friend;
 }
